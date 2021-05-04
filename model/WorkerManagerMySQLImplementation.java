@@ -81,7 +81,7 @@ public class WorkerManagerMySQLImplementation extends ConnectionMySQLImplementat
 		stmt = con.prepareStatement(sLISTbuyers); 
 		
 		rs = stmt.executeQuery();
-		
+		//while
 		while(rs.next()) {
 			buyer = new Buyer();
 			buyer.setsId_user(rs.getString("id_user"));
