@@ -74,6 +74,7 @@ public class WorkerManagerMySQLImplementation extends ConnectionMySQLImplementat
 		ResultSet rs = null;
 		Buyer buyer;
 		
+		//Abrimos la conexión
 		openConnection();
 		final String sLISTbuyers = "SELECT * FROM buyer";
 		stmt = con.prepareStatement(sLISTbuyers); 
