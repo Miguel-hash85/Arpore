@@ -69,8 +69,9 @@ public class WorkerManagerMySQLImplementation extends ConnectionMySQLImplementat
 	}
 
 	@Override
-	public ArrayList<Buyer> listBuyers() throws Exception{
-		ArrayList<Buyer> rgbBuyers = new ArrayList<Buyer>();
+	public ArrayList<Object> listObjects() throws Exception{
+
+		ArrayList<Buyer> arrBuyers = new ArrayList<Buyer>();
 		ResultSet rs = null;
 		Buyer buyer;
 		
@@ -90,11 +91,55 @@ public class WorkerManagerMySQLImplementation extends ConnectionMySQLImplementat
 			buyer.setsTelephone(rs.getString("telephone"));
 			buyer.setsAddress(rs.getString("address"));
 			buyer.setsType_user(rs.getString("type_user"));
+			buyer.setsCod_buyer(rs.getString("cod_buyer"));
+			buyer.setbActive(rs.getBoolean("active"));
+			buyer.setsType_h(rs.getString("type_h"));
+			buyer.setiSurface(rs.getInt("surface"));
+			buyer.setiRoom_number(rs.getInt("room_number"));
+			buyer.setiBathroom_number(rs.getInt("bathroom_number"));
+			buyer.setbLifter(rs.getBoolean("lifter"));
+			buyer.setbOutdoor_spaces(rs.getBoolean("outdoor_spaces"));
+			buyer.setsCity(rs.getString("city"));
+			buyer.setdMaxPrice(rs.getDouble("max_price"));
+			buyer.setdMinPrice(rs.getDouble("min_price"));
 			
+			arrBuyers.add(buyer);
 		}
 		
 		closeConnection();
-		return rgbBuyers;		
+		return arrBuyers;	
+		
+		
+		
+		ArrayList<Household> arrHouseholds = new ArrayList<>();
+		ResultSet rs = null;
+		Household household;
+		
+		openConnection();
+		
+		final String sLISThouseholds ="SELECT * FROM households";
+		stmt = con.prepareStatement(sLISThouseholds);
+		
+		rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			household.setsCod_household(rs.getString("cod_household"));
+			household.setsType_h(rs.getString("type_h"));
+			household.setiSurface(rs.getInt("surface"));
+			household.setiRoom_number(rs.getInt("room_number"));
+			household.setiBathroom_number(rs.getInt("bathroom_number"));
+			household.setbLifter(rs.getBoolean("lifter"));
+			household.setbOutdoor_spaces(rs.getBoolean("outdoor_spaces"));
+			household.setsCity(rs.getString("city"));
+			household.setsType_acquisition(rs.getString("type_acquisition"));
+			household.setdPrice(rs.getDouble("price"));
+			household.setbAvailability(rs.getBoolean("availability"));
+			household.setsDescription(rs.getString("description"));
+			
+			arrHouseholds.add(household);
+		}
+		closeConnection();
+		return arrHouseholds;
 	}
 
 	@Override
@@ -116,9 +161,8 @@ public class WorkerManagerMySQLImplementation extends ConnectionMySQLImplementat
 	}
 
 	@Override
-	public ArrayList<Visits> listHousehold() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Visits> listHousehold() throws Exception{
+		
 	}
 
 
