@@ -21,6 +21,7 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 	final String UPDATEworker = "UPDATE worker S41ET nombre = ?, telefono= ? WHERE id = ?";
 	final String DELETEworker = "DELETE FROM worker WHERE id = ?";
 
+	//Abrir conexion
 	private void openConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/agency?serverTimezone=Europe/Madrid&useSSL=false";
