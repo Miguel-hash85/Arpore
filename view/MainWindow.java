@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,34 +18,29 @@ import model.WorkerManagerMySQLImplementation;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
-import java.awt.Color;
-import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
-import java.awt.Toolkit;
-import javax.swing.border.LineBorder;
+import java.awt.Color;
 import java.awt.SystemColor;
-import javax.swing.UIManager;
-import java.awt.Cursor;
 import java.awt.Font;
+import javax.swing.JPasswordField;
+import javax.swing.UIManager;
 
 public class MainWindow extends JFrame implements ActionListener{
 
 	private Worker worker;
 	private WorkerManager workerManager;
 	private JPanel contentPane;
-	private JTextField textFieldUser;
-	private JTextField textFieldPassword;
-	private JButton btnLogin;
-	private JLabel lblBackground;
-	private JLabel lblbehindLoginContent;
+	private JTextField textUser;
+	private JPasswordField passwordFieldLogin;
+	private Object btnLogin;
 
 	public MainWindow() {
 		super("Fullscreen");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/Logo.png")));
+		setTitle("Arpore");
 	    getContentPane().setPreferredSize( Toolkit.getDefaultToolkit().getScreenSize());
 	    pack();
 	    show();
@@ -61,58 +57,68 @@ public class MainWindow extends JFrame implements ActionListener{
 	      }
 	    });
 		this.setExtendedState(MAXIMIZED_BOTH);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/images/Logo.png")));
-		setTitle("Arpore");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1622, 1017);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setForeground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblUser = new JLabel("User:");
-		lblUser.setFont(new Font("Estrangelo Edessa", Font.PLAIN, 13));
-		lblUser.setForeground(SystemColor.text);
-		lblUser.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUser.setBounds(1343, 497, 56, 37);
-		contentPane.add(lblUser);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/Logo.png")));
+		lblLogo.setBounds(232, 377, 320, 185);
+		contentPane.add(lblLogo);
+		
+		JLabel lblArpore = new JLabel("Arpore");
+		lblArpore.setForeground(Color.DARK_GRAY);
+		lblArpore.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 99));
+		lblArpore.setBounds(164, 531, 408, 121);
+		contentPane.add(lblArpore);
+		
+		JPanel panelGreyLoginBackground = new JPanel();
+		panelGreyLoginBackground.setBorder(UIManager.getBorder("Button.border"));
+		panelGreyLoginBackground.setBackground(new Color(51, 51, 51));
+		panelGreyLoginBackground.setBounds(1095, 364, 496, 307);
+		contentPane.add(panelGreyLoginBackground);
+		panelGreyLoginBackground.setLayout(null);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Estrangelo Edessa", Font.PLAIN, 13));
-		lblPassword.setForeground(SystemColor.text);
+		lblPassword.setFont(new Font("Tunga", Font.BOLD, 17));
+		lblPassword.setForeground(Color.WHITE);
 		lblPassword.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPassword.setBounds(1326, 545, 73, 37);
-		contentPane.add(lblPassword);
+		lblPassword.setBounds(48, 108, 98, 34);
+		panelGreyLoginBackground.add(lblPassword);
 		
-		textFieldUser = new JTextField();
-		textFieldUser.setBounds(1409, 504, 157, 23);
-		contentPane.add(textFieldUser);
-		textFieldUser.setColumns(10);
+		textUser = new JTextField();
+		textUser.setBounds(156, 55, 282, 29);
+		textUser.setColumns(10);
+		panelGreyLoginBackground.add(textUser);
 		
-		textFieldPassword = new JTextField();
-		textFieldPassword.setColumns(10);
-		textFieldPassword.setBounds(1409, 552, 157, 23);
-		contentPane.add(textFieldPassword);
+		JLabel lblUser = new JLabel("User:");
+		lblUser.setFont(new Font("Tunga", Font.BOLD, 17));
+		lblUser.setForeground(Color.WHITE);
+		lblUser.setBackground(SystemColor.windowBorder);
+		lblUser.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUser.setBounds(63, 50, 83, 42);
+		panelGreyLoginBackground.add(lblUser);
 		
-		btnLogin = new JButton("Login");
-		btnLogin.setFont(new Font("Estrangelo Edessa", Font.PLAIN, 11));
-		btnLogin.setBounds(1484, 618, 82, 23);
-		contentPane.add(btnLogin);
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBorderPainted(false);
+		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setBackground(Color.GRAY);
+		btnLogin.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnLogin.setBounds(340, 221, 98, 34);
+		panelGreyLoginBackground.add(btnLogin);
 		
-		lblbehindLoginContent = new JLabel("");
-		lblbehindLoginContent.setIcon(new ImageIcon(MainWindow.class.getResource("/images/Yey.png (4).png")));
-		lblbehindLoginContent.setOpaque(true);
-		lblbehindLoginContent.setBackground(Color.BLACK);
-		lblbehindLoginContent.setBounds(1199, 437, 483, 271);
-		contentPane.add(lblbehindLoginContent);
+		passwordFieldLogin = new JPasswordField();
+		passwordFieldLogin.setBounds(156, 109, 282, 29);
+		panelGreyLoginBackground.add(passwordFieldLogin);
 		
-		lblBackground = new JLabel("");
-		lblBackground.setBackground(SystemColor.desktop);
-		lblBackground.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/images/FondoLoginPreuba.jpg")));
-		lblBackground.setBounds(0, 0, 1920, 1072);
-		contentPane.add(lblBackground);
-		btnLogin.addActionListener(this);
+		JLabel lblBackgroundLogin = new JLabel("");
+		lblBackgroundLogin.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/FondoLogin.jpg")));
+		lblBackgroundLogin.setBounds(0, 0, 1920, 1062);
+		contentPane.add(lblBackgroundLogin);
 	}
 
 	@Override
