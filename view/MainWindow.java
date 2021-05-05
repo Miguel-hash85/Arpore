@@ -56,7 +56,6 @@ public class MainWindow extends JFrame implements ActionListener{
 	        setLocation(l);
 	      }
 	    });
-		this.setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -119,6 +118,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		lblBackgroundLogin.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/FondoLogin.jpg")));
 		lblBackgroundLogin.setBounds(0, 0, 1920, 1062);
 		contentPane.add(lblBackgroundLogin);
+		this.setExtendedState(MAXIMIZED_BOTH);
 	}
 
 	@Override
