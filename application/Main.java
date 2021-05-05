@@ -1,6 +1,7 @@
 package application;
 
 import model.*;
+import view.BuyerWindow;
 import view.MainWindow;
 
 public class Main {
@@ -13,8 +14,10 @@ public class Main {
 		BuyerManager buyerManager = new BuyerManagerMySQLImplementation();
 		
 		//Pantalla principal
-		MainWindow mainWindow = new MainWindow();
-		mainWindow.setVisible(true);
+		//MainWindow mainWindow = new MainWindow();
+		BuyerWindow buyerWindow = new BuyerWindow();
+		//mainWindow.setVisible(true);
+		buyerWindow.setVisible(true);
 
 	}
 
