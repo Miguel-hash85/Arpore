@@ -14,10 +14,10 @@ public class Main {
 		BuyerManager buyerManager = new BuyerManagerMySQLImplementation();
 		
 		//Pantalla principal
-		//MainWindow mainWindow = new MainWindow();
-		BuyerWindow buyerWindow = new BuyerWindow();
-		//mainWindow.setVisible(true);
-		buyerWindow.setVisible(true);
+		MainWindow mainWindow = new MainWindow(adminManager, workerManager, buyerManager);
+		//BuyerWindow buyerWindow = new BuyerWindow();
+		mainWindow.setVisible(true);
+		//buyerWindow.setVisible(true);
 
 	}
 

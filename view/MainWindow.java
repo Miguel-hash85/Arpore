@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.AdminManager;
+import model.BuyerManager;
 import model.Worker;
 import model.WorkerManager;
 import model.WorkerManagerMySQLImplementation;
@@ -37,7 +39,7 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JPasswordField passwordFieldLogin;
 	private Object btnLogin;
 
-	public MainWindow() {
+	public MainWindow(AdminManager adminManager, WorkerManager workerManager2, BuyerManager buyerManager) {
 		super("Fullscreen");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/Logo.png")));
 		setTitle("Arpore");
