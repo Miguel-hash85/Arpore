@@ -1,22 +1,36 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.AdminManager;
+import model.BuyerManager;
+import model.BuyerManagerMySQLImplementation;
+import model.WorkerManager;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldUser;
 	private JTextField textFieldPassword;
+	private JButton btnLogin;
+	private BuyerManagerMySQLImplementation buyerV;
 
-	public MainWindow() {
+	public MainWindow(AdminManager adminManager, WorkerManager workerManager, BuyerManager buyerManager) {
+		buyerV=(BuyerManagerMySQLImplementation) buyerManager;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -42,8 +56,28 @@ public class MainWindow extends JFrame {
 		textFieldPassword.setBounds(174, 104, 157, 29);
 		contentPane.add(textFieldPassword);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.setBounds(170, 186, 89, 23);
 		contentPane.add(btnLogin);
+		btnLogin.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
+		try {
+			if(buyerV.getBuyer(textFieldUser.getText(),textFieldPassword.getText())) 
+			{
+				BuyerWindow buyerWindow=new BuyerWindow(buyerV);
+				buyerWindow.setVisible(true);
+			}
+		} catch (Exception e1) {
+			
+			JOptionPane.showMessageDialog(this, "Error en el campo User");
+			e1.printStackTrace();
+		}
+			
+		
 	}
 }

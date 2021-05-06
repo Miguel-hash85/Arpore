@@ -9,16 +9,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.BuyerManager;
+import model.BuyerManagerMySQLImplementation;
 
 public class BuyerWindow extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private BuyerManager data;
 	private JButton btnListHouses;
 	private JButton btnlistVisits;
 
 	
-	public BuyerWindow() {
+	public BuyerWindow(BuyerManagerMySQLImplementation buyerV) {
+		data=buyerV;
 		setBounds(100, 100, 700, 437);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -1,6 +1,7 @@
 package model;
 
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 	private Household household;
 	private Visits visit;
 	
+	//**********************BUYER SENTENCES ***********************************
+	final String sSELECTbuyer="SELECT * FROM buyer where id_buyer=?";
 	//**********************HOUSEHOLD sentences ********************************
 	final String sSELECThousehold = "SELECT * FROM household WHERE cod_household=?";
 	final String sSELECTallHouseholds="SELECT * from household";
@@ -98,7 +101,7 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 
 	
 	//Method which makes a select, and return an object of type household
-	public Household buscarHousehold(String sCod_household) throws Exception{
+	public Household getHousehold(String sCod_household) throws Exception{
 		
 		ResultSet rs = null;
 		openConnection();
@@ -129,5 +132,13 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 		closeConnection();
 		return household;
 	}
+	
+	public boolean getBuyer(String sId_buyer, String sPassword) throws Exception 
+	{
+		CallableStatement cst = con.prepareCall("{CALL loginBuyer(?,?)}");
+		return true;
+		
+	}
+	
 
 }
