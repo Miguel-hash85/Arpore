@@ -51,12 +51,12 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 	//Metodo que devuelve un listado de todas las casas disponibles
 	//Para ello, aplicaremos un filtro, y en base a éste, crearemos un ArrayList con los campos encontrados que coincidan.
 	@Override
-	public ArrayList<Household> listHousehold() throws Exception {
+	public ArrayList<Household> listHouseholds() throws Exception {
 		
 		ResultSet rs = null;
 		ArrayList<Household> rgbHouseholdList=new ArrayList<Household>();
 		openConnection();
-		stmt = con.prepareStatement(sSELECTfilter);
+		stmt = con.prepareStatement(sSELECTallHouseholds);
 		rs = stmt.executeQuery();
 		while (rs.next()) 
 		{
@@ -69,7 +69,7 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 			household.setbLifter(rs.getBoolean("lifter"));
 			household.setbOutdoor_spaces(rs.getBoolean("outdoor_spaces"));
 			household.setsCity(rs.getString("city"));
-			household.setsType_acquisition(rs.getString("type_acquisiton"));
+			household.setsType_acquisition(rs.getString("type_acquisition"));
 			household.setdPrice(rs.getDouble("price"));
 			household.setbAvailability(rs.getBoolean("availability"));
 			household.setsDescription(rs.getString("description"));
@@ -133,10 +133,23 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 		return household;
 	}
 	
-	public boolean getBuyer(String sId_buyer, String sPassword) throws Exception 
+	
+	@Override
+	public boolean getBuyer(String sId_user, String sPassword) throws Exception 
 	{
-		CallableStatement cst = con.prepareCall("{CALL loginBuyer(?,?)}");
-		return true;
+		
+		boolean error;
+		openConnection();
+		CallableStatement cst = con.prepareCall("{CALL loginBuyer(?,?,?)}");
+		cst.setString(1, sId_user);
+		cst.setString(2, sPassword);
+		cst.registerOutParameter(3, java.sql.Types.BOOLEAN);
+		cst.execute();
+		error=cst.getBoolean(3);	
+		closeConnection();
+		
+		return error;
+		
 		
 	}
 	

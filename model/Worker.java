@@ -1,11 +1,7 @@
 package model;
 
 import java.time.LocalDate;
-/**
- * 
- * @author 1dami
- *
- */
+
 public class Worker extends User{
 	private String sSocialSecurityNumber;
 	private String sId_admin;

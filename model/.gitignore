@@ -1,0 +1,13 @@
+/Admin.class
+/AdminManager.class
+/AdminManagerMySQLImplementation.class
+/Buyer.class
+/BuyerManager.class
+/BuyerManagerMySQLImplementation.class
+/ConnectionMySQLImplementation.class
+/Household.class
+/User.class
+/Visits.class
+/Worker.class
+/WorkerManager.class
+/WorkerManagerMySQLImplementation.class
