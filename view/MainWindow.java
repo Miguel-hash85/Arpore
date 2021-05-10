@@ -1,11 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,10 +13,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.AdminManager;
 import model.BuyerManager;
-import model.Worker;
 import model.WorkerManager;
-import model.WorkerManagerMySQLImplementation;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -32,16 +29,26 @@ import javax.swing.UIManager;
 
 public class MainWindow extends JFrame implements ActionListener{
 
-	private Worker worker;
-	private WorkerManager workerManager;
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textUser;
 	private JPasswordField passwordFieldLogin;
-	private Object btnLogin;
+	private JButton btnLogin;
+	private BuyerManager buyerManager;
+	private WorkerManager workerManager;
+	private AdminManager adminManager;
 
-	public MainWindow(AdminManager adminManager, WorkerManager workerManager2, BuyerManager buyerManager) {
+	public MainWindow(AdminManager adminManager, WorkerManager workerManager, BuyerManager buyerManager) {
 		super("Fullscreen");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/Logo.png")));
+		this.buyerManager = buyerManager;
+		this.workerManager = workerManager;
+		this.adminManager = adminManager;
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/Logo43x43.png")));
 		setTitle("Arpore");
 	    getContentPane().setPreferredSize( Toolkit.getDefaultToolkit().getScreenSize());
 	    pack();
@@ -93,8 +100,9 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		textUser = new JTextField();
 		textUser.setBounds(156, 55, 282, 29);
-		textUser.setColumns(10);
 		panelGreyLoginBackground.add(textUser);
+		textUser.setColumns(10);
+
 		
 		JLabel lblUser = new JLabel("User:");
 		lblUser.setFont(new Font("Tunga", Font.BOLD, 17));
@@ -104,12 +112,13 @@ public class MainWindow extends JFrame implements ActionListener{
 		lblUser.setBounds(63, 50, 83, 42);
 		panelGreyLoginBackground.add(lblUser);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.setBorderPainted(false);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(Color.GRAY);
 		btnLogin.setFont(new Font("Tunga", Font.BOLD, 17));
 		btnLogin.setBounds(340, 221, 98, 34);
+		btnLogin.addActionListener(this);
 		panelGreyLoginBackground.add(btnLogin);
 		
 		passwordFieldLogin = new JPasswordField();
@@ -123,21 +132,40 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.setExtendedState(MAXIMIZED_BOTH);
 	}
 
+	
+	/*
+	 * En esta parte del codigo, controlamos el tipo de usuario que está intentando iniciar sesión
+	 * para generar la ventana que proceda.
+	 * 
+	 * */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(btnLogin)) {
-			login(workerManager);
+		
+		boolean esta=false;
+		try {
+			if(buyerManager.getBuyer(textUser.getText(),passwordFieldLogin.getText())){
+				BuyerWindow buyerWindow=new BuyerWindow(buyerManager, textUser.getText());
+				buyerWindow.setVisible(true);
+				esta=true;
+			}else if(workerManager.getWorker(textUser.getText(), passwordFieldLogin.getText())) {
+				WorkerWindow workerWindow = new WorkerWindow(workerManager);
+				workerWindow.setVisible(true);
+				esta = true;
+			}else if(adminManager.getAdmin(textUser.getText(), passwordFieldLogin.getText())) {
+				AdminWindow adminWindow = new AdminWindow(adminManager);
+				adminWindow.setVisible(true);
+				esta = true;
+			}
+			if(!esta)
+				JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+			
+		} catch (Exception e1) {
+			
+			JOptionPane.showMessageDialog(this, "Longitud incorrecta");
+			e1.printStackTrace();
 		}
+			
 		
 	}
 
-	private void login(WorkerManager workerManager) {
-		try {
-			workerManager = new WorkerManagerMySQLImplementation();
-			workerManager.addObject(workerManager);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(),"Error al abrir la conexión", JOptionPane.ERROR_MESSAGE);
-		}
-		
-	}
 }

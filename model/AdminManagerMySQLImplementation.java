@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +22,6 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 	final String UPDATEworker = "UPDATE worker S41ET nombre = ?, telefono= ? WHERE id = ?";
 	final String DELETEworker = "DELETE FROM worker WHERE id = ?";
 
-	//Abrir conexion
 	private void openConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/agency?serverTimezone=Europe/Madrid&useSSL=false";
@@ -170,6 +170,22 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 			}
 		}
 
+	}
+
+	@Override
+	public boolean getAdmin(String sId_user, String sPassword) throws Exception {
+		boolean error;
+		openConnection();
+		CallableStatement cst = con.prepareCall("{CALL loginAdmin(?,?,?)}");
+		cst.setString(1, sId_user);
+		cst.setString(2, sPassword);
+		cst.registerOutParameter(3, java.sql.Types.BOOLEAN);
+		cst.execute();
+		error=cst.getBoolean(3);	
+		closeConnection();
+		
+		return error;
+		
 	}
 
 }

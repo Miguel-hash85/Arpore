@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public abstract class ConnectionMySQLImplementation {
 
-	private Connection con;
-	private PreparedStatement stmt;
+	protected Connection con;
+	protected PreparedStatement stmt;
 	
 	
 	

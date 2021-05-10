@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public interface BuyerManager {
 	
-	 public void buyHousehold(Household household) throws Exception;
-	 public ArrayList<Household> listHousehold()throws Exception;
+	//comentario para probar github
+	 public boolean buyHousehold(Household household) throws Exception;
+	 public ArrayList<Household> listHouseholds()throws Exception;
 	 public ArrayList <Visits> listVisits(String id_user)throws Exception;
+	 boolean getBuyer(String sId_buyer, String sPassword) throws Exception;
 
 }
