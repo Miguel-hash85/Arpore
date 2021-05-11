@@ -36,8 +36,8 @@ public class MainWindow extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textUser;
-	private JPasswordField passwordFieldLogin;
+	private static JTextField textUser;
+	private static JPasswordField passwordFieldLogin;
 	private JButton btnLogin;
 	private BuyerManager buyerManager;
 	private WorkerManager workerManager;
@@ -87,7 +87,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		JPanel panelGreyLoginBackground = new JPanel();
 		panelGreyLoginBackground.setBorder(UIManager.getBorder("Button.border"));
 		panelGreyLoginBackground.setBackground(new Color(51, 51, 51));
-		panelGreyLoginBackground.setBounds(1095, 364, 496, 307);
+		panelGreyLoginBackground.setBounds(1085, 364, 506, 307);
 		contentPane.add(panelGreyLoginBackground);
 		panelGreyLoginBackground.setLayout(null);
 		
@@ -126,6 +126,12 @@ public class MainWindow extends JFrame implements ActionListener{
 		passwordFieldLogin.setBounds(156, 109, 282, 29);
 		panelGreyLoginBackground.add(passwordFieldLogin);
 		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/InfoLogo.png")));
+		lblNewLabel.setToolTipText("(El usuario sera su DNI)");
+		lblNewLabel.setBounds(448, 55, 14, 14);
+		panelGreyLoginBackground.add(lblNewLabel);
+		
 		JLabel lblBackgroundLogin = new JLabel("");
 		lblBackgroundLogin.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/FondoLogin.jpg")));
 		lblBackgroundLogin.setBounds(0, 0, 1920, 1062);
@@ -162,11 +168,16 @@ public class MainWindow extends JFrame implements ActionListener{
 			
 		} catch (Exception e1) {
 			
-			JOptionPane.showMessageDialog(this, "Longitud incorrecta");
+			JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
 			e1.printStackTrace();
 		}
 			
 		
+	}
+	
+	public static void clean() {
+		passwordFieldLogin.setText("");
+		textUser.setText("");
 	}
 
 }

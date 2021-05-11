@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AdminManagerMySQLImplementation implements AdminManager {
+public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementation implements AdminManager {
 
 	private Connection con;
 	private PreparedStatement statement;
@@ -20,53 +20,23 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 	final String UPDATEworker = "UPDATE worker S41ET nombre = ?, telefono= ? WHERE id = ?";
 	final String DELETEworker = "DELETE FROM worker WHERE id = ?";
 
-	private void openConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/agency?serverTimezone=Europe/Madrid&useSSL=false";
-			con = DriverManager.getConnection(url, "root", "abcd*1234");
-
-		} catch (SQLException e) {
-			System.out.println("Error al intentar abrir la BD");
-		}
-	}
-
-	private void closeConnection() throws SQLException {
-		System.out.println("Conexion Cerrada.");
-		if (statement != null)
-			statement.close();
-		if (con != null)
-			con.close();
-		System.out.println("------------------------");
-	}
-
+	
 	@Override
 	public void addWorker(Worker worker) throws Exception {
-		this.openConnection();
+		openConnection();
 
-		try {
-			statement = con.prepareStatement(INSERTworker);
+		statement = con.prepareStatement(INSERTworker);
 
-			statement.setString(1, worker.getsId_user());
-			statement.setString(2, worker.getsName());
-			statement.setString(3, worker.getsSurname());
-			statement.setString(3, worker.getsEmail());
-			statement.setString(3, worker.getsTelephone());
-			statement.setString(3, worker.getsAddress());
-			statement.executeUpdate();
+		statement.setString(1, worker.getsId_user());
+		statement.setString(2, worker.getsName());
+		statement.setString(3, worker.getsSurname());
+		statement.setString(3, worker.getsEmail());
+		statement.setString(3, worker.getsTelephone());
+		statement.setString(3, worker.getsAddress());
+		statement.executeUpdate();
 
-		} catch (SQLException e1) {
-			String error = "Something went wrong, contact the supplier";
-			Exception ex = new Exception(error);
-			throw ex;
+		closeConnection();
 
-		} finally {
-			try {
-				this.closeConnection();
-			} catch (SQLException e) {
-				System.out.println("Error en cierre de la BD");
-				e.printStackTrace();
-			}
-		}
 	}
 
 	@Override
@@ -74,100 +44,56 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 		ArrayList<Worker> workers = new ArrayList<>();
 		ResultSet rs = null;
 
-		this.openConnection();
+		openConnection();
+		statement = con.prepareStatement(GETworkers);
+		rs = statement.executeQuery();
 
-		try {
-			statement = con.prepareStatement(GETworkers);
-
-			rs = statement.executeQuery();
-
-			while (rs.next()) {
-				worker = new Worker();
-				worker.setsId_user(rs.getString("id"));
-				worker.setsName(rs.getString("name"));
-				worker.setsSurname(rs.getString("surname"));
-				worker.setsEmail(rs.getString("email"));
-				worker.setsTelephone(rs.getString("telephone"));
-				worker.setsAddress(rs.getString("address"));
-				workers.add(worker);
-			}
-
-		} catch (SQLException e) {
-			System.out.println("SQL Error");
-			e.printStackTrace();
-
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException ex) {
-					System.out.println("Error en cierre del ResultSet");
-				}
-			}
-			try {
-				this.closeConnection();
-			} catch (SQLException e) {
-				System.out.println("Error in the DB closing");
-				e.printStackTrace();
-			}
+		while (rs.next()) {
+			worker = new Worker();
+			worker.setsId_user(rs.getString("id"));
+			worker.setsName(rs.getString("name"));
+			worker.setsSurname(rs.getString("surname"));
+			worker.setsEmail(rs.getString("email"));
+			worker.setsTelephone(rs.getString("telephone"));
+			worker.setsAddress(rs.getString("address"));
+			workers.add(worker);
 		}
+		closeConnection();
+		rs.close();
+		closeConnection();
 		return workers;
 	}
 
 	@Override
 	public boolean modWorker(Worker worker) throws Exception {
 		boolean changes = false;
-		this.openConnection();
 
-		try {
-			statement = con.prepareStatement(UPDATEworker);
+		openConnection();
+		statement = con.prepareStatement(UPDATEworker);
 
-			statement.setString(1, worker.getsId_user());
-			statement.setString(2, worker.getsName());
-			statement.setString(3, worker.getsSurname());
-			statement.setString(4, worker.getsEmail());
-			statement.setString(5, worker.getsTelephone());
-			statement.setString(6, worker.getsAddress());
+		statement.setString(1, worker.getsId_user());
+		statement.setString(2, worker.getsName());
+		statement.setString(3, worker.getsSurname());
+		statement.setString(4, worker.getsEmail());
+		statement.setString(5, worker.getsTelephone());
+		statement.setString(6, worker.getsAddress());
 
-			if (statement.executeUpdate() == 1)
-				changes = true;
-		} catch (SQLException e1) {
-			System.out.println("Error in the SQL modification");
-			e1.printStackTrace();
-		} finally {
-			try {
-				this.closeConnection();
-			} catch (SQLException e) {
-				System.out.println("Error in the DB closing");
-				e.printStackTrace();
-			}
-		}
+		if (statement.executeUpdate() == 1)
+			changes = true;
+		closeConnection();
+
 		return changes;
 	}
 
 	@Override
 	public void deleteWorker(Worker worker) throws Exception {
-		// Abrimos la conexión
-		this.openConnection();
+		openConnection();
 
-		try {
-			// Preparamos la sentencia stmt con la conexion y sentencia sql correspondiente
-			statement = con.prepareStatement(DELETEworker);
-			statement.setString(1, worker.getsId_user());
-			statement.executeUpdate();
+		statement = con.prepareStatement(DELETEworker);
+		statement.setString(1, worker.getsId_user());
+		statement.executeUpdate();
 
-		} catch (SQLException e1) {
-			System.out.println("Error in the SQL modification");
-			e1.printStackTrace();
-		} finally {
-			try {
-				this.closeConnection();
-			} catch (SQLException e) {
-				System.out.println("Error in the DB closing");
-				e.printStackTrace();
-			}
-		}
-
+		closeConnection();
 	}
 
 	@Override
@@ -187,30 +113,26 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 	}
 
 	@Override
-	public Worker searchWorker(String worker) throws Exception {
+	public boolean searchWorker(String worker) throws Exception {
 		ResultSet rs = null;
-		Worker searchedWorker = null;
+		boolean searchedWorker = false;
 
-		this.openConnection();
-		try {
-			statement = con.prepareStatement(GETworker);
-			statement.setString(1, worker);
-			rs = statement.executeQuery();
+		openConnection();
 
-			if (rs.next()) {
-				searchedWorker = new Worker();
-				searchedWorker.setsId_user(worker);
-				searchedWorker.setsName(rs.getString("Nombre"));
-				searchedWorker.setsSurname(rs.getString("Apellido"));
-				searchedWorker.setsTelephone(rs.getString("Telefono"));
-			} else
-				searchedWorker = null;
-		} catch (SQLException e) {
+		statement = con.prepareStatement(GETworker);
+		statement.setString(1, worker);
+		rs = statement.executeQuery();
 
-		} finally {
+		if (rs.next()) {
+			searchedWorker = true;
+
+			if (rs != null)
+				rs.close();
+
+			closeConnection();
 
 		}
-		return null;
+		return searchedWorker;
 	}
 
 }

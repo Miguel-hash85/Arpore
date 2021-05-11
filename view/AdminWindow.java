@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import model.AdminManager;
+import model.Worker;
 import model.WorkerManager;
 
 import java.awt.Rectangle;
@@ -23,6 +24,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JMenu;
 import java.awt.ComponentOrientation;
@@ -35,7 +38,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
-public class AdminWindow extends JDialog implements ActionListener {
+public class AdminWindow extends JDialog implements ActionListener, FocusListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JPanel panelTop;
@@ -66,7 +69,6 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JPasswordField passwordFieldAdd;
 
 	public AdminWindow(AdminManager adminManager) {
-		setResizable(false);
 		// Propia ventana
 		setTitle("Admin Window");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminWindow.class.getResource("/resources/Logo43x43.png")));
@@ -111,7 +113,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		mntmNewMenuItem.setIcon(new ImageIcon(AdminWindow.class.getResource("/resources/Logout.png")));
 		mntmNewMenuItem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnUserMenu.add(mntmNewMenuItem);
-		mnUserMenu.addActionListener(this);
+		mntmNewMenuItem.addActionListener(this);
 
 		// ---- PARTE INFERIOR ----
 		// Creamos el conjunto de pestañas
@@ -152,7 +154,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		// Panel para recogerlos
 		JPanel panelOrderAdd = new JPanel();
 		panelOrderAdd.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		panelOrderAdd.setBounds(95, 38, 1103, 521);
+		panelOrderAdd.setBounds(95, 38, 1103, 653);
 		panelAdd.add(panelOrderAdd);
 		panelOrderAdd.setLayout(null);
 
@@ -180,70 +182,70 @@ public class AdminWindow extends JDialog implements ActionListener {
 		textId_userAdd.setBackground(new Color(204, 204, 204));
 
 		JLabel lblNameAdd = new JLabel("Nombre:");
-		lblNameAdd.setBounds(47, 168, 91, 31);
+		lblNameAdd.setBounds(47, 169, 91, 31);
 		panelOrderAdd.add(lblNameAdd);
 		lblNameAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNameAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		textNameAdd = new JTextField();
 		textNameAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textNameAdd.setBounds(148, 168, 290, 31);
+		textNameAdd.setBounds(148, 169, 290, 31);
 		panelOrderAdd.add(textNameAdd);
 		textNameAdd.setOpaque(true);
 		textNameAdd.setColumns(10);
 		textNameAdd.setBackground(new Color(204, 204, 204));
 
 		JLabel lblSurnameAdd = new JLabel("Apellido:");
-		lblSurnameAdd.setBounds(47, 228, 91, 31);
+		lblSurnameAdd.setBounds(467, 169, 91, 31);
 		panelOrderAdd.add(lblSurnameAdd);
 		lblSurnameAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblSurnameAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		textSurnameAdd = new JTextField();
 		textSurnameAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textSurnameAdd.setBounds(148, 228, 290, 31);
+		textSurnameAdd.setBounds(568, 229, 290, 31);
 		panelOrderAdd.add(textSurnameAdd);
 		textSurnameAdd.setOpaque(true);
 		textSurnameAdd.setColumns(10);
 		textSurnameAdd.setBackground(new Color(204, 204, 204));
 
 		JLabel lblEmailAdd = new JLabel("Email:");
-		lblEmailAdd.setBounds(467, 109, 91, 31);
+		lblEmailAdd.setBounds(47, 229, 91, 31);
 		panelOrderAdd.add(lblEmailAdd);
 		lblEmailAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblEmailAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		textEmailAdd = new JTextField();
 		textEmailAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textEmailAdd.setBounds(568, 109, 290, 31);
+		textEmailAdd.setBounds(148, 229, 290, 31);
 		panelOrderAdd.add(textEmailAdd);
 		textEmailAdd.setOpaque(true);
 		textEmailAdd.setColumns(10);
 		textEmailAdd.setBackground(new Color(204, 204, 204));
 
 		JLabel lblTelephoneAdd = new JLabel("Tel\u00E9fono:");
-		lblTelephoneAdd.setBounds(467, 165, 91, 31);
+		lblTelephoneAdd.setBounds(467, 229, 91, 31);
 		panelOrderAdd.add(lblTelephoneAdd);
 		lblTelephoneAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelephoneAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		textTelephoneAdd = new JTextField();
 		textTelephoneAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textTelephoneAdd.setBounds(568, 165, 290, 31);
+		textTelephoneAdd.setBounds(568, 169, 290, 31);
 		panelOrderAdd.add(textTelephoneAdd);
 		textTelephoneAdd.setOpaque(true);
 		textTelephoneAdd.setColumns(10);
 		textTelephoneAdd.setBackground(new Color(204, 204, 204));
 
 		JLabel lblAddressAdd = new JLabel("Direcci\u00F3n:");
-		lblAddressAdd.setBounds(467, 225, 91, 31);
+		lblAddressAdd.setBounds(47, 289, 91, 31);
 		panelOrderAdd.add(lblAddressAdd);
 		lblAddressAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAddressAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
 		textAddressAdd = new JTextField();
 		textAddressAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textAddressAdd.setBounds(568, 225, 290, 31);
+		textAddressAdd.setBounds(148, 289, 290, 31);
 		panelOrderAdd.add(textAddressAdd);
 		textAddressAdd.setOpaque(true);
 		textAddressAdd.setColumns(10);
@@ -252,13 +254,13 @@ public class AdminWindow extends JDialog implements ActionListener {
 		JLabel lblContraseaAdd = new JLabel("Contrase\u00F1a:");
 		lblContraseaAdd.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblContraseaAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblContraseaAdd.setBounds(47, 288, 91, 31);
+		lblContraseaAdd.setBounds(47, 349, 91, 31);
 		panelOrderAdd.add(lblContraseaAdd);
 
 		passwordFieldAdd = new JPasswordField();
 		passwordFieldAdd.setBackground(new Color(204, 204, 204));
 		passwordFieldAdd.setColumns(10);
-		passwordFieldAdd.setBounds(147, 288, 291, 31);
+		passwordFieldAdd.setBounds(147, 349, 291, 31);
 		panelOrderAdd.add(passwordFieldAdd);
 
 		btnCleanAdd = new JButton("Limpiar");
@@ -266,7 +268,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		btnCleanAdd.setFont(new Font("Tunga", Font.BOLD, 17));
 		btnCleanAdd.setBorderPainted(false);
 		btnCleanAdd.setBackground(Color.GRAY);
-		btnCleanAdd.setBounds(652, 380, 98, 34);
+		btnCleanAdd.setBounds(648, 476, 98, 34);
 		panelOrderAdd.add(btnCleanAdd);
 
 		btnAcceptAdd = new JButton("Aceptar");
@@ -274,7 +276,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		btnAcceptAdd.setFont(new Font("Tunga", Font.BOLD, 17));
 		btnAcceptAdd.setBorderPainted(false);
 		btnAcceptAdd.setBackground(Color.GRAY);
-		btnAcceptAdd.setBounds(760, 380, 98, 34);
+		btnAcceptAdd.setBounds(756, 476, 98, 34);
 		panelOrderAdd.add(btnAcceptAdd);
 		btnAcceptAdd.addActionListener(this);
 		btnCleanAdd.addActionListener(this);
@@ -552,34 +554,53 @@ public class AdminWindow extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent a) {
-		if (a.getSource().equals(mnUserMenu)) {
+		if (a.getSource().equals(mntmNewMenuItem)) {
+			MainWindow.clean();
 			this.dispose();
 		}
 		if (a.getSource().equals(btnAcceptAdd)) {
-			alta(workerManager);
+			alta(adminManager);
 		}
 		if (a.getSource().equals(btnCleanAdd)) {
-			limpiar();
+			cleanAdd();
 		}
 	}
 
-	private void alta(WorkerManager workerManager2) {
+	private void alta(AdminManager adminManager) {
 		if (textId_userAdd.getText().isEmpty() || textNameAdd.getText().isEmpty() || textSurnameAdd.getText().isEmpty()
 				|| textTelephoneAdd.getText().isEmpty() || textAddressAdd.getText().isEmpty()
 				|| textEmailAdd.getText().isEmpty() || passwordFieldAdd.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Error, falta algún dato por rellenar", "Error",
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
-
+			try {
+				boolean workerFound = adminManager.searchWorker(textId_userAdd.getText());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "iepa");
+			}
 		}
 	}
 
-	private void limpiar() {
+	private void cleanAdd() {
 		textId_userAdd.setText("");
 		textNameAdd.setText("");
 		textSurnameAdd.setText("");
 		textEmailAdd.setText("");
 		textTelephoneAdd.setText("");
 		textAddressAdd.setText("");
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
