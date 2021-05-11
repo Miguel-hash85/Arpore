@@ -32,7 +32,7 @@ public class MainWindow extends JFrame implements ActionListener{
 	
 	
 	/**
-	 * 
+	 *  Hola
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
