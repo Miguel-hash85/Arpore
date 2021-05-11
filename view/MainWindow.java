@@ -99,6 +99,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		panelGreyLoginBackground.add(lblPassword);
 		
 		textUser = new JTextField();
+		textUser.setToolTipText("(El usuario sera su DNI)");
 		textUser.setBounds(156, 55, 282, 29);
 		panelGreyLoginBackground.add(textUser);
 		textUser.setColumns(10);
@@ -107,7 +108,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		JLabel lblUser = new JLabel("User:");
 		lblUser.setFont(new Font("Tunga", Font.BOLD, 17));
 		lblUser.setForeground(Color.WHITE);
-		lblUser.setBackground(SystemColor.windowBorder);
+		lblUser.setBackground(Color.WHITE);
 		lblUser.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblUser.setBounds(63, 50, 83, 42);
 		panelGreyLoginBackground.add(lblUser);

@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
 public class AdminManagerMySQLImplementation implements AdminManager {
 
 	private Connection con;
@@ -74,14 +72,14 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 	@Override
 	public ArrayList<Worker> listWorker(Worker worker) throws Exception {
 		ArrayList<Worker> workers = new ArrayList<>();
-		 ResultSet rs = null;
+		ResultSet rs = null;
 
 		this.openConnection();
 
 		try {
 			statement = con.prepareStatement(GETworkers);
 
-			 rs = statement.executeQuery();
+			rs = statement.executeQuery();
 
 			while (rs.next()) {
 				worker = new Worker();
@@ -181,11 +179,38 @@ public class AdminManagerMySQLImplementation implements AdminManager {
 		cst.setString(2, sPassword);
 		cst.registerOutParameter(3, java.sql.Types.BOOLEAN);
 		cst.execute();
-		error=cst.getBoolean(3);	
+		error = cst.getBoolean(3);
 		closeConnection();
-		
+
 		return error;
-		
+
+	}
+
+	@Override
+	public Worker searchWorker(String worker) throws Exception {
+		ResultSet rs = null;
+		Worker searchedWorker = null;
+
+		this.openConnection();
+		try {
+			statement = con.prepareStatement(GETworker);
+			statement.setString(1, worker);
+			rs = statement.executeQuery();
+
+			if (rs.next()) {
+				searchedWorker = new Worker();
+				searchedWorker.setsId_user(worker);
+				searchedWorker.setsName(rs.getString("Nombre"));
+				searchedWorker.setsSurname(rs.getString("Apellido"));
+				searchedWorker.setsTelephone(rs.getString("Telefono"));
+			} else
+				searchedWorker = null;
+		} catch (SQLException e) {
+
+		} finally {
+
+		}
+		return null;
 	}
 
 }

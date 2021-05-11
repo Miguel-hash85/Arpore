@@ -3,6 +3,7 @@ package view;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -32,6 +33,7 @@ import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 public class AdminWindow extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -39,16 +41,29 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JPanel panelTop;
 	private JMenu mnUserMenu;
 	private JMenuItem mntmNewMenuItem;
-	private JTextField textId_user;
-	private JTextField textAddress;
-	private JTextField textTelephone;
-	private JTextField textEmail;
-	private JTextField textSurname;
-	private JTextField textName;
-	private JButton btnClean;
-	private JButton btnAccept;
+	private JTextField textId_userAdd;
+	private JTextField textAddressAdd;
+	private JTextField textTelephoneAdd;
+	private JTextField textEmailAdd;
+	private JTextField textSurnameAdd;
+	private JTextField textNameAdd;
+	private JButton btnCleanAdd;
+	private JButton btnAcceptAdd;
 	private static AdminManager adminManager;
 	private static WorkerManager workerManager;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTextField textField_10;
+	private JTextField textField_11;
+	private JPasswordField passwordFieldAdd;
 
 	public AdminWindow(AdminManager adminManager) {
 		setResizable(false);
@@ -59,10 +74,10 @@ public class AdminWindow extends JDialog implements ActionListener {
 		this.adminManager = adminManager;
 		this.setSize(this.getToolkit().getScreenSize());
 
-		// ---- PARTE SUPERIOR ----
+		// ---- ENCABEZADO ----
 		// Panel en la parte de arriba con el logo nombre y usuario
 		panelTop = new JPanel();
-		panelTop.setBounds(0, 0, 1904, 66);
+		panelTop.setBounds(0, 0, 1914, 66);
 		panelTop.setBackground(Color.WHITE);
 		getContentPane().add(panelTop);
 		panelTop.setLayout(null);
@@ -101,7 +116,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		// ---- PARTE INFERIOR ----
 		// Creamos el conjunto de pestañas
 		JTabbedPane tabWorker = new JTabbedPane();
-		tabWorker.setBounds(0, 65, 1904, 1042);
+		tabWorker.setBounds(0, 66, 1914, 1041);
 		tabWorker.setOpaque(true);
 		tabWorker.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		tabWorker.setBackground(new Color(204, 204, 204));
@@ -135,116 +150,134 @@ public class AdminWindow extends JDialog implements ActionListener {
 		panelProfile.setLayout(null);
 
 		// Panel para recogerlos
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
-		panel.setBounds(62, 36, 879, 557);
-		panelAdd.add(panel);
-		panel.setLayout(null);
+		JPanel panelOrderAdd = new JPanel();
+		panelOrderAdd.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		panelOrderAdd.setBounds(95, 38, 1103, 521);
+		panelAdd.add(panelOrderAdd);
+		panelOrderAdd.setLayout(null);
 
 		JLabel lblProfile = new JLabel("Datos Personales");
-		lblProfile.setBounds(47, 47, 786, 25);
-		panel.add(lblProfile);
+		lblProfile.setBounds(47, 47, 870, 31);
+		panelOrderAdd.add(lblProfile);
 		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfile.setOpaque(true);
 		lblProfile.setBackground(new Color(204, 204, 204));
-		lblProfile.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblProfile.setFont(new Font("Tahoma", Font.PLAIN, 22));
 
-		JLabel lblId_user = new JLabel("DNI:");
-		lblId_user.setBounds(213, 96, 91, 31);
-		panel.add(lblId_user);
-		lblId_user.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblId_user.setOpaque(true);
-		lblId_user.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblId_userAdd = new JLabel("DNI:");
+		lblId_userAdd.setBounds(47, 109, 91, 31);
+		panelOrderAdd.add(lblId_userAdd);
+		lblId_userAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblId_userAdd.setOpaque(true);
+		lblId_userAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textId_user = new JTextField();
-		textId_user.setBounds(314, 96, 290, 31);
-		panel.add(textId_user);
-		textId_user.setOpaque(true);
-		textId_user.setColumns(10);
-		textId_user.setBackground(new Color(204, 204, 204));
+		textId_userAdd = new JTextField();
+		textId_userAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textId_userAdd.setBounds(148, 109, 290, 31);
+		panelOrderAdd.add(textId_userAdd);
+		textId_userAdd.setOpaque(true);
+		textId_userAdd.setColumns(10);
+		textId_userAdd.setBackground(new Color(204, 204, 204));
 
-		JLabel lblName = new JLabel("Nombre:");
-		lblName.setBounds(213, 141, 91, 31);
-		panel.add(lblName);
-		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblNameAdd = new JLabel("Nombre:");
+		lblNameAdd.setBounds(47, 168, 91, 31);
+		panelOrderAdd.add(lblNameAdd);
+		lblNameAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNameAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textName = new JTextField();
-		textName.setBounds(314, 141, 290, 31);
-		panel.add(textName);
-		textName.setOpaque(true);
-		textName.setColumns(10);
-		textName.setBackground(new Color(204, 204, 204));
+		textNameAdd = new JTextField();
+		textNameAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textNameAdd.setBounds(148, 168, 290, 31);
+		panelOrderAdd.add(textNameAdd);
+		textNameAdd.setOpaque(true);
+		textNameAdd.setColumns(10);
+		textNameAdd.setBackground(new Color(204, 204, 204));
 
-		JLabel lblSurname = new JLabel("Apellido:");
-		lblSurname.setBounds(213, 183, 91, 31);
-		panel.add(lblSurname);
-		lblSurname.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSurname.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblSurnameAdd = new JLabel("Apellido:");
+		lblSurnameAdd.setBounds(47, 228, 91, 31);
+		panelOrderAdd.add(lblSurnameAdd);
+		lblSurnameAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSurnameAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textSurname = new JTextField();
-		textSurname.setBounds(314, 183, 290, 31);
-		panel.add(textSurname);
-		textSurname.setOpaque(true);
-		textSurname.setColumns(10);
-		textSurname.setBackground(new Color(204, 204, 204));
+		textSurnameAdd = new JTextField();
+		textSurnameAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textSurnameAdd.setBounds(148, 228, 290, 31);
+		panelOrderAdd.add(textSurnameAdd);
+		textSurnameAdd.setOpaque(true);
+		textSurnameAdd.setColumns(10);
+		textSurnameAdd.setBackground(new Color(204, 204, 204));
 
-		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(213, 225, 91, 31);
-		panel.add(lblEmail);
-		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblEmailAdd = new JLabel("Email:");
+		lblEmailAdd.setBounds(467, 109, 91, 31);
+		panelOrderAdd.add(lblEmailAdd);
+		lblEmailAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmailAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textEmail = new JTextField();
-		textEmail.setBounds(314, 225, 290, 31);
-		panel.add(textEmail);
-		textEmail.setOpaque(true);
-		textEmail.setColumns(10);
-		textEmail.setBackground(new Color(204, 204, 204));
+		textEmailAdd = new JTextField();
+		textEmailAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textEmailAdd.setBounds(568, 109, 290, 31);
+		panelOrderAdd.add(textEmailAdd);
+		textEmailAdd.setOpaque(true);
+		textEmailAdd.setColumns(10);
+		textEmailAdd.setBackground(new Color(204, 204, 204));
 
-		JLabel lblTelephone = new JLabel("Tel\u00E9fono:");
-		lblTelephone.setBounds(213, 267, 91, 31);
-		panel.add(lblTelephone);
-		lblTelephone.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTelephone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblTelephoneAdd = new JLabel("Tel\u00E9fono:");
+		lblTelephoneAdd.setBounds(467, 165, 91, 31);
+		panelOrderAdd.add(lblTelephoneAdd);
+		lblTelephoneAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTelephoneAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textTelephone = new JTextField();
-		textTelephone.setBounds(314, 267, 290, 31);
-		panel.add(textTelephone);
-		textTelephone.setOpaque(true);
-		textTelephone.setColumns(10);
-		textTelephone.setBackground(new Color(204, 204, 204));
+		textTelephoneAdd = new JTextField();
+		textTelephoneAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textTelephoneAdd.setBounds(568, 165, 290, 31);
+		panelOrderAdd.add(textTelephoneAdd);
+		textTelephoneAdd.setOpaque(true);
+		textTelephoneAdd.setColumns(10);
+		textTelephoneAdd.setBackground(new Color(204, 204, 204));
 
-		JLabel lblAddress = new JLabel("Direcci\u00F3n:");
-		lblAddress.setBounds(213, 309, 91, 31);
-		panel.add(lblAddress);
-		lblAddress.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel lblAddressAdd = new JLabel("Direcci\u00F3n:");
+		lblAddressAdd.setBounds(467, 225, 91, 31);
+		panelOrderAdd.add(lblAddressAdd);
+		lblAddressAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAddressAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		textAddress = new JTextField();
-		textAddress.setBounds(314, 309, 290, 31);
-		panel.add(textAddress);
-		textAddress.setOpaque(true);
-		textAddress.setColumns(10);
-		textAddress.setBackground(new Color(204, 204, 204));
+		textAddressAdd = new JTextField();
+		textAddressAdd.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textAddressAdd.setBounds(568, 225, 290, 31);
+		panelOrderAdd.add(textAddressAdd);
+		textAddressAdd.setOpaque(true);
+		textAddressAdd.setColumns(10);
+		textAddressAdd.setBackground(new Color(204, 204, 204));
 
-		btnAccept = new JButton("Aceptar");
-		btnAccept.setForeground(Color.WHITE);
-		btnAccept.setFont(new Font("Tunga", Font.BOLD, 17));
-		btnAccept.setBorderPainted(false);
-		btnAccept.setBackground(Color.GRAY);
-		btnAccept.setBounds(506, 380, 98, 34);
-		panel.add(btnAccept);
-		btnAccept.addActionListener(this);
+		JLabel lblContraseaAdd = new JLabel("Contrase\u00F1a:");
+		lblContraseaAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblContraseaAdd.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblContraseaAdd.setBounds(47, 288, 91, 31);
+		panelOrderAdd.add(lblContraseaAdd);
 
-		btnClean = new JButton("Limpiar");
-		btnClean.setForeground(Color.WHITE);
-		btnClean.setFont(new Font("Tunga", Font.BOLD, 17));
-		btnClean.setBorderPainted(false);
-		btnClean.setBackground(Color.GRAY);
-		btnClean.setBounds(398, 380, 98, 34);
-		panel.add(btnClean);
-		btnClean.addActionListener(this);
+		passwordFieldAdd = new JPasswordField();
+		passwordFieldAdd.setBackground(new Color(204, 204, 204));
+		passwordFieldAdd.setColumns(10);
+		passwordFieldAdd.setBounds(147, 288, 291, 31);
+		panelOrderAdd.add(passwordFieldAdd);
+
+		btnCleanAdd = new JButton("Limpiar");
+		btnCleanAdd.setForeground(Color.WHITE);
+		btnCleanAdd.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnCleanAdd.setBorderPainted(false);
+		btnCleanAdd.setBackground(Color.GRAY);
+		btnCleanAdd.setBounds(652, 380, 98, 34);
+		panelOrderAdd.add(btnCleanAdd);
+
+		btnAcceptAdd = new JButton("Aceptar");
+		btnAcceptAdd.setForeground(Color.WHITE);
+		btnAcceptAdd.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnAcceptAdd.setBorderPainted(false);
+		btnAcceptAdd.setBackground(Color.GRAY);
+		btnAcceptAdd.setBounds(760, 380, 98, 34);
+		panelOrderAdd.add(btnAcceptAdd);
+		btnAcceptAdd.addActionListener(this);
+		btnCleanAdd.addActionListener(this);
 
 		// Pestaña borrar
 		JPanel panelDelete = new JPanel();
@@ -252,10 +285,120 @@ public class AdminWindow extends JDialog implements ActionListener {
 		tabGRUB.addTab("Baja", null, panelDelete, null);
 		panelDelete.setLayout(null);
 
-		JLabel et_p3 = new JLabel("Estas en el panel Baja"); // Esta linea y la siguiente es solo usado para comprobar
-																// que se cambiaba de pestaña
-		et_p3.setBounds(894, 5, 105, 14);
-		panelDelete.add(et_p3);
+		JPanel panelOrderDelete = new JPanel();
+		panelOrderDelete.setLayout(null);
+		panelOrderDelete.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		panelOrderDelete.setBounds(95, 38, 1103, 521);
+		panelDelete.add(panelOrderDelete);
+
+		JLabel lblProfile_1 = new JLabel("Datos Personales");
+		lblProfile_1.setOpaque(true);
+		lblProfile_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProfile_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblProfile_1.setBackground(new Color(204, 204, 204));
+		lblProfile_1.setBounds(47, 47, 870, 31);
+		panelOrderDelete.add(lblProfile_1);
+
+		JLabel lblId_user_1 = new JLabel("DNI:");
+		lblId_user_1.setOpaque(true);
+		lblId_user_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblId_user_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblId_user_1.setBounds(47, 109, 91, 31);
+		panelOrderDelete.add(lblId_user_1);
+
+		textField = new JTextField();
+		textField.setOpaque(true);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField.setColumns(10);
+		textField.setBackground(new Color(204, 204, 204));
+		textField.setBounds(148, 109, 290, 31);
+		panelOrderDelete.add(textField);
+
+		JLabel lblName_1 = new JLabel("Nombre:");
+		lblName_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblName_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblName_1.setBounds(47, 168, 91, 31);
+		panelOrderDelete.add(lblName_1);
+
+		textField_1 = new JTextField();
+		textField_1.setOpaque(true);
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_1.setColumns(10);
+		textField_1.setBackground(new Color(204, 204, 204));
+		textField_1.setBounds(148, 168, 290, 31);
+		panelOrderDelete.add(textField_1);
+
+		JLabel lblSurname_1 = new JLabel("Apellido:");
+		lblSurname_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSurname_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSurname_1.setBounds(47, 228, 91, 31);
+		panelOrderDelete.add(lblSurname_1);
+
+		textField_2 = new JTextField();
+		textField_2.setOpaque(true);
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_2.setColumns(10);
+		textField_2.setBackground(new Color(204, 204, 204));
+		textField_2.setBounds(148, 228, 290, 31);
+		panelOrderDelete.add(textField_2);
+
+		JLabel lblEmail_1 = new JLabel("Email:");
+		lblEmail_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmail_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail_1.setBounds(467, 109, 91, 31);
+		panelOrderDelete.add(lblEmail_1);
+
+		textField_3 = new JTextField();
+		textField_3.setOpaque(true);
+		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_3.setColumns(10);
+		textField_3.setBackground(new Color(204, 204, 204));
+		textField_3.setBounds(568, 109, 290, 31);
+		panelOrderDelete.add(textField_3);
+
+		JLabel lblTelephone_1 = new JLabel("Tel\u00E9fono:");
+		lblTelephone_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTelephone_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelephone_1.setBounds(467, 165, 91, 31);
+		panelOrderDelete.add(lblTelephone_1);
+
+		textField_4 = new JTextField();
+		textField_4.setOpaque(true);
+		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_4.setColumns(10);
+		textField_4.setBackground(new Color(204, 204, 204));
+		textField_4.setBounds(568, 165, 290, 31);
+		panelOrderDelete.add(textField_4);
+
+		JLabel lblAddress_1 = new JLabel("Direcci\u00F3n:");
+		lblAddress_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAddress_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAddress_1.setBounds(467, 225, 91, 31);
+		panelOrderDelete.add(lblAddress_1);
+
+		textField_5 = new JTextField();
+		textField_5.setOpaque(true);
+		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_5.setColumns(10);
+		textField_5.setBackground(new Color(204, 204, 204));
+		textField_5.setBounds(568, 225, 290, 31);
+		panelOrderDelete.add(textField_5);
+
+		JButton btnAccept_1 = new JButton("Aceptar");
+		btnAccept_1.setForeground(Color.WHITE);
+		btnAccept_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnAccept_1.setBorderPainted(false);
+		btnAccept_1.setBackground(Color.GRAY);
+		btnAccept_1.setBounds(760, 380, 98, 34);
+		panelOrderDelete.add(btnAccept_1);
+
+		JButton btnClean_1 = new JButton("Limpiar");
+		btnClean_1.setForeground(Color.WHITE);
+		btnClean_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnClean_1.setBorderPainted(false);
+		btnClean_1.setBackground(Color.GRAY);
+		btnClean_1.setBounds(652, 380, 98, 34);
+		panelOrderDelete.add(btnClean_1);
 
 		// Pestaña modificar
 		JPanel panelModify = new JPanel();
@@ -263,10 +406,120 @@ public class AdminWindow extends JDialog implements ActionListener {
 		tabGRUB.addTab("Modificar", null, panelModify, null);
 		panelModify.setLayout(null);
 
-		JLabel et_p4 = new JLabel("Estas en el panel Modificar"); // Esta linea y la siguiente es solo usado para
-																	// comprobar que se cambiaba de pestaña
-		et_p4.setBounds(883, 5, 127, 14);
-		panelModify.add(et_p4);
+		JPanel panelOrderModify = new JPanel();
+		panelOrderModify.setLayout(null);
+		panelOrderModify.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		panelOrderModify.setBounds(95, 38, 1103, 521);
+		panelModify.add(panelOrderModify);
+
+		JLabel lblProfile_1_1 = new JLabel("Datos Personales");
+		lblProfile_1_1.setOpaque(true);
+		lblProfile_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProfile_1_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblProfile_1_1.setBackground(new Color(204, 204, 204));
+		lblProfile_1_1.setBounds(47, 47, 870, 31);
+		panelOrderModify.add(lblProfile_1_1);
+
+		JLabel lblId_user_1_1 = new JLabel("DNI:");
+		lblId_user_1_1.setOpaque(true);
+		lblId_user_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblId_user_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblId_user_1_1.setBounds(47, 109, 91, 31);
+		panelOrderModify.add(lblId_user_1_1);
+
+		textField_6 = new JTextField();
+		textField_6.setOpaque(true);
+		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_6.setColumns(10);
+		textField_6.setBackground(new Color(204, 204, 204));
+		textField_6.setBounds(148, 109, 290, 31);
+		panelOrderModify.add(textField_6);
+
+		JLabel lblName_1_1 = new JLabel("Nombre:");
+		lblName_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblName_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblName_1_1.setBounds(47, 168, 91, 31);
+		panelOrderModify.add(lblName_1_1);
+
+		textField_7 = new JTextField();
+		textField_7.setOpaque(true);
+		textField_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_7.setColumns(10);
+		textField_7.setBackground(new Color(204, 204, 204));
+		textField_7.setBounds(148, 168, 290, 31);
+		panelOrderModify.add(textField_7);
+
+		JLabel lblSurname_1_1 = new JLabel("Apellido:");
+		lblSurname_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSurname_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSurname_1_1.setBounds(47, 228, 91, 31);
+		panelOrderModify.add(lblSurname_1_1);
+
+		textField_8 = new JTextField();
+		textField_8.setOpaque(true);
+		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_8.setColumns(10);
+		textField_8.setBackground(new Color(204, 204, 204));
+		textField_8.setBounds(148, 228, 290, 31);
+		panelOrderModify.add(textField_8);
+
+		JLabel lblEmail_1_1 = new JLabel("Email:");
+		lblEmail_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmail_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail_1_1.setBounds(467, 109, 91, 31);
+		panelOrderModify.add(lblEmail_1_1);
+
+		textField_9 = new JTextField();
+		textField_9.setOpaque(true);
+		textField_9.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_9.setColumns(10);
+		textField_9.setBackground(new Color(204, 204, 204));
+		textField_9.setBounds(568, 109, 290, 31);
+		panelOrderModify.add(textField_9);
+
+		JLabel lblTelephone_1_1 = new JLabel("Tel\u00E9fono:");
+		lblTelephone_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTelephone_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelephone_1_1.setBounds(467, 165, 91, 31);
+		panelOrderModify.add(lblTelephone_1_1);
+
+		textField_10 = new JTextField();
+		textField_10.setOpaque(true);
+		textField_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_10.setColumns(10);
+		textField_10.setBackground(new Color(204, 204, 204));
+		textField_10.setBounds(568, 165, 290, 31);
+		panelOrderModify.add(textField_10);
+
+		JLabel lblAddress_1_1 = new JLabel("Direcci\u00F3n:");
+		lblAddress_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAddress_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAddress_1_1.setBounds(467, 225, 91, 31);
+		panelOrderModify.add(lblAddress_1_1);
+
+		textField_11 = new JTextField();
+		textField_11.setOpaque(true);
+		textField_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_11.setColumns(10);
+		textField_11.setBackground(new Color(204, 204, 204));
+		textField_11.setBounds(568, 225, 290, 31);
+		panelOrderModify.add(textField_11);
+
+		JButton btnAccept_1_1 = new JButton("Aceptar");
+		btnAccept_1_1.setForeground(Color.WHITE);
+		btnAccept_1_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnAccept_1_1.setBorderPainted(false);
+		btnAccept_1_1.setBackground(Color.GRAY);
+		btnAccept_1_1.setBounds(760, 380, 98, 34);
+		panelOrderModify.add(btnAccept_1_1);
+
+		JButton btnClean_1_1 = new JButton("Limpiar");
+		btnClean_1_1.setForeground(Color.WHITE);
+		btnClean_1_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnClean_1_1.setBorderPainted(false);
+		btnClean_1_1.setBackground(Color.GRAY);
+		btnClean_1_1.setBounds(652, 380, 98, 34);
+		panelOrderModify.add(btnClean_1_1);
 
 		// Pestaña listar
 		JPanel panelList = new JPanel();
@@ -274,10 +527,27 @@ public class AdminWindow extends JDialog implements ActionListener {
 		tabGRUB.addTab("Listar", null, panelList, null);
 		panelList.setLayout(null);
 
-		JLabel et_p4_1 = new JLabel("Estas en el panel Listar"); // Esta linea y la siguiente es solo usado para
-																	// comprobar que se cambiaba de pestaña
-		et_p4_1.setBounds(892, 5, 110, 14);
-		panelList.add(et_p4_1);
+		JPanel panelOrderList = new JPanel();
+		panelOrderList.setLayout(null);
+		panelOrderList.setBorder(new LineBorder(UIManager.getColor("Button.shadow")));
+		panelOrderList.setBounds(95, 38, 1103, 521);
+		panelList.add(panelOrderList);
+
+		JButton btnAccept_1_1_1 = new JButton("Aceptar");
+		btnAccept_1_1_1.setForeground(Color.WHITE);
+		btnAccept_1_1_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnAccept_1_1_1.setBorderPainted(false);
+		btnAccept_1_1_1.setBackground(Color.GRAY);
+		btnAccept_1_1_1.setBounds(760, 380, 98, 34);
+		panelOrderList.add(btnAccept_1_1_1);
+
+		JButton btnClean_1_1_1 = new JButton("Limpiar");
+		btnClean_1_1_1.setForeground(Color.WHITE);
+		btnClean_1_1_1.setFont(new Font("Tunga", Font.BOLD, 17));
+		btnClean_1_1_1.setBorderPainted(false);
+		btnClean_1_1_1.setBackground(Color.GRAY);
+		btnClean_1_1_1.setBounds(652, 380, 98, 34);
+		panelOrderList.add(btnClean_1_1_1);
 
 	}
 
@@ -285,26 +555,31 @@ public class AdminWindow extends JDialog implements ActionListener {
 		if (a.getSource().equals(mnUserMenu)) {
 			this.dispose();
 		}
-		if (a.getSource().equals(btnAccept)) {
+		if (a.getSource().equals(btnAcceptAdd)) {
 			alta(workerManager);
 		}
-		if (a.getSource().equals(btnClean)) {
+		if (a.getSource().equals(btnCleanAdd)) {
 			limpiar();
 		}
 	}
 
 	private void alta(WorkerManager workerManager2) {
-		// TODO Auto-generated method stub
-		
+		if (textId_userAdd.getText().isEmpty() || textNameAdd.getText().isEmpty() || textSurnameAdd.getText().isEmpty()
+				|| textTelephoneAdd.getText().isEmpty() || textAddressAdd.getText().isEmpty()
+				|| textEmailAdd.getText().isEmpty() || passwordFieldAdd.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Error, falta algún dato por rellenar", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+
+		}
 	}
 
 	private void limpiar() {
-		textId_user.setText("");
-		textName.setText("");
-		textSurname.setText("");
-		textEmail.setText("");
-		textTelephone.setText("");
-		textAddress.setText("");
+		textId_userAdd.setText("");
+		textNameAdd.setText("");
+		textSurnameAdd.setText("");
+		textEmailAdd.setText("");
+		textTelephoneAdd.setText("");
+		textAddressAdd.setText("");
 	}
-
 }
