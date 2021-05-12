@@ -159,7 +159,7 @@ public class MainWindow extends JFrame implements ActionListener{
 				workerWindow.setVisible(true);
 				esta = true;
 			}else if(adminManager.getAdmin(textUser.getText(), passwordFieldLogin.getText())) {
-				AdminWindow adminWindow = new AdminWindow(adminManager);
+				AdminWindow adminWindow = new AdminWindow(adminManager, textUser.getText());
 				adminWindow.setVisible(true);
 				esta = true;
 			}
@@ -168,7 +168,7 @@ public class MainWindow extends JFrame implements ActionListener{
 			
 		} catch (Exception e1) {
 			
-			JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+			JOptionPane.showMessageDialog(this, e1.getMessage());
 			e1.printStackTrace();
 		}
 			

@@ -20,7 +20,18 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 	final String UPDATEworker = "UPDATE worker S41ET nombre = ?, telefono= ? WHERE id = ?";
 	final String DELETEworker = "DELETE FROM worker WHERE id = ?";
 
-	
+	// Quitar cuando arreglemos  la clase abstracta
+	public void openConnection() throws Exception{
+		
+		  //String url = "jdbc:mysql://localhost/nombreBaseDatos";
+		  String url ="jdbc:mysql://localhost:3306/agency?serverTimezone=Europe/Madrid&useSSL=false";
+		  //con =  DriverManager.getConnection(url+"?" +"user=____&password=_____");
+		  con =  DriverManager.getConnection(url,"root" ,"abcd*1234");
+
+		
+	}
+	// Hasta aqui
+
 	@Override
 	public void addWorker(Worker worker) throws Exception {
 		openConnection();
@@ -130,7 +141,6 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 				rs.close();
 
 			closeConnection();
-
 		}
 		return searchedWorker;
 	}
