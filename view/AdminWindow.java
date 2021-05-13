@@ -32,6 +32,8 @@ import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.border.LineBorder;
@@ -622,6 +624,7 @@ public class AdminWindow extends JDialog implements ActionListener, FocusListene
 
 	private void alta(AdminManager adminManager) {
 		Worker newWorker = new Worker();
+		LocalDate workerAddTime = LocalDate.now();
 		
 		if (textId_userAdd.getText().isEmpty() || textNameAdd.getText().isEmpty() || textSurnameAdd.getText().isEmpty()
 				|| textTelephoneAdd.getText().isEmpty() || textAddressAdd.getText().isEmpty()
@@ -639,16 +642,36 @@ public class AdminWindow extends JDialog implements ActionListener, FocusListene
 					newWorker.setsAddress(textAddressAdd.getText());
 					newWorker.setsTelephone(textTelephoneAdd.getText());
 					newWorker.setsSocialSecurityNumber(textSocialSecurityNumberAdd.getText());
-					newWorker.setLddate_s_w(now);
+					//newWorker.setLddate_s_w(workerAddTime);
 					newWorker.setsId_admin(id_admin);
 					newWorker.setsType_user("worker");
+					int accept = JOptionPane.showConfirmDialog(this, "¿Estas seguro en dar de alta a este  usuario?");
+					if (accept==0) {
+						try {
+							adminManager.addWorker(newWorker);
+							JOptionPane.showMessageDialog(this, "Trabajador añadido");
+						}catch (Exception e){
+							JOptionPane.showMessageDialog(this, e.getMessage());
+						}
+					} else if (accept==1) {
+						JOptionPane.showMessageDialog(this, "Propietario no dado de alta");
+					}else
+						JOptionPane.showMessageDialog(this, "Operación cancelada");
+				}else{
+					JOptionPane.showMessageDialog(this, "Error, el propietario ya existe", "Usuario duplicado", JOptionPane.WARNING_MESSAGE);
+					
 				}
+				clean();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(this, e.getMessage());
 			}
 		}
+	}
+
+	private void clean() {
+		
 	}
 
 	private void cleanAdd() {

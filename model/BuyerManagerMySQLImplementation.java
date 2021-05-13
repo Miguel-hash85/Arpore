@@ -20,12 +20,15 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 	final String sSELECTbuyer="SELECT * FROM buyer where id_buyer=?";
 	//**********************HOUSEHOLD sentences ********************************
 	final String sSELECThousehold = "SELECT * FROM household WHERE cod_household=?";
-	final String sSELECTallHouseholds="SELECT * from household";
 	final String sSELECTfilter="SELECT * FROM household WHERE type_h=? and surface=? and room_number=? and bathroom_number=? and lifter=? and outdoor_spaces=? and city=? and type_acquisition=? and price=? and availability=? and description=?";
 	final String sUPDATEhousehold = "UPDATE household set availability=? where cod_household=?";
 	
 	//*********************VISITS sentences ************************************
-	final String sSELECTvisit = "SELECT * FROM visits WHERE id_buyer=?";
+	final String sSELECTALLvisits="SELECT * FROM visits WHERE id_buyer=?";
+	final String sSELECTvisit = "SELECT * FROM visits WHERE id_buyer=? and cod_household=? and id_worker=?";
+	final String sUPDATEconfirmedF="UPDATE visits SET confirmed=? where cod_household=? and id_buyer=? and id_worker=?";
+	final String sUPDATEconfirmedT="UPDATE visits SET confirmed=? where cod_household=? and id_buyer=? and id_worker=?";
+	
 	
 	
 
@@ -51,8 +54,12 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 	//Metodo que devuelve un listado de todas las casas disponibles
 	//Para ello, aplicaremos un filtro, y en base a éste, crearemos un ArrayList con los campos encontrados que coincidan.
 	@Override
-	public ArrayList<Household> listHouseholds() throws Exception {
+	public ArrayList<Household> listHouseholds(String strQueryFinalSend) throws Exception {
 		
+		
+		String sSELECTallHouseholds="SELECT * from household";
+		if(strQueryFinalSend!=null)
+			sSELECTallHouseholds=strQueryFinalSend;
 		ResultSet rs = null;
 		ArrayList<Household> rgbHouseholdList=new ArrayList<Household>();
 		openConnection();
@@ -88,7 +95,7 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 		ResultSet rs = null;
 		ArrayList<Visits> arrVisits=new ArrayList<Visits>();
 		openConnection();
-		stmt = con.prepareStatement(sSELECTvisit);
+		stmt = con.prepareStatement(sSELECTALLvisits);
 		stmt.setString(1, id_user);
 		rs = stmt.executeQuery();
 		while (rs.next()) 
@@ -98,7 +105,7 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 			visit.setsId_buyer(rs.getString("id_buyer"));
 			visit.setsId_worker(rs.getString("id_worker"));
 			visit.setLdtDate_time_visit(rs.getTimestamp("date_time_visit"));
-			visit.setConfirmed(rs.getBoolean("confirmed"));
+			visit.setbConfirmed(rs.getBoolean("confirmed"));
 			arrVisits.add(visit);
 			
 		}
@@ -107,9 +114,72 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 		closeConnection();
 		return arrVisits;
 	}
+	
+	//Metodo para recoger una visita a traves de la posicion que ocupa en la tabla.
+	
+	@Override
+	public Visits getVisit(String cod_household, String id_buyer, String id_worker) throws Exception 
+	{
+		
+		ResultSet rs = null;
+		openConnection();
+		stmt = con.prepareStatement(sSELECTvisit);
+		stmt.setString(1, id_buyer);
+		stmt.setString(2, cod_household);
+		stmt.setString(3, id_worker);
+		rs = stmt.executeQuery();
+		if(rs.next()) 
+		{	
+			visit=new Visits();
+			visit.setsCod_household(rs.getString("cod_household"));
+			visit.setsId_buyer(rs.getString("id_buyer"));
+			visit.setsId_worker(rs.getString("id_worker"));
+			visit.setLdtDate_time_visit(rs.getTimestamp("date_time_visit"));
+			visit.setbConfirmed(rs.getBoolean("confirmed"));
+		}
+		if (rs != null)
+			rs.close();
+		closeConnection();
+		return visit;
+	}
+	
+	@Override
+	public boolean updateVisitF(String cod_household, String id_buyer, String id_worker) throws Exception {
+		
+		boolean bChanges=false;
+		openConnection();
+		stmt = con.prepareStatement(sUPDATEconfirmedF);
+		stmt.setBoolean(1, false);
+		stmt.setString(2, cod_household);
+		stmt.setString(3, id_buyer);
+		stmt.setString(4, id_worker);
+		if (stmt.executeUpdate()==1) 
+			bChanges=true;
+		closeConnection();
+		return bChanges;
+	}
+	
+	@Override
+	public boolean updateVisitT(String cod_household, String id_buyer, String id_worker) throws Exception {
+		
+		boolean bChanges=false;
+		openConnection();
+		stmt = con.prepareStatement(sUPDATEconfirmedT);
+		stmt.setBoolean(1, true);
+		stmt.setString(2, cod_household);
+		stmt.setString(3, id_buyer);
+		stmt.setString(4, id_worker);
+		if (stmt.executeUpdate()==1) 
+			bChanges=true;
+		closeConnection();
+		return bChanges;
+		
+	}
+	
 
 	
 	//Method which makes a select, and return an object of type household
+	@Override
 	public Household getHousehold(String sCod_household) throws Exception{
 		
 		ResultSet rs = null;
@@ -129,7 +199,7 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 				household.setbLifter(rs.getBoolean("lifter"));
 				household.setbOutdoor_spaces(rs.getBoolean("outdoor_spaces"));
 				household.setsCity(rs.getString("city"));
-				household.setsType_acquisition(rs.getString("type_acquisiton"));
+				household.setsType_acquisition(rs.getString("type_acquisition"));
 				household.setdPrice(rs.getDouble("price"));
 				household.setbAvailability(rs.getBoolean("availability"));
 				household.setsDescription(rs.getString("description"));
@@ -161,6 +231,12 @@ public class BuyerManagerMySQLImplementation extends ConnectionMySQLImplementati
 		
 		
 	}
+
+
+	
+
+
+	
 	
 
 }

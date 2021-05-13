@@ -1,11 +1,12 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Worker extends User{
 	private String sSocialSecurityNumber;
 	private String sId_admin;
-	private LocalDate lddate_s_w;
+	private Date lddate_s_w;
 	private boolean bActive;
 	
 	
@@ -22,10 +23,10 @@ public class Worker extends User{
 	public void setsId_admin(String sId_admin) {
 		this.sId_admin = sId_admin;
 	}
-	public LocalDate getLddate_s_w() {
+	public Date getLddate_s_w() {
 		return lddate_s_w;
 	}
-	public void setLddate_s_w(LocalDate lddate_s_w) {
+	public void setLddate_s_w(Date lddate_s_w) {
 		this.lddate_s_w = lddate_s_w;
 	}
 

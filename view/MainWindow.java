@@ -155,7 +155,7 @@ public class MainWindow extends JFrame implements ActionListener{
 				buyerWindow.setVisible(true);
 				esta=true;
 			}else if(workerManager.getWorker(textUser.getText(), passwordFieldLogin.getText())) {
-				WorkerWindow workerWindow = new WorkerWindow(workerManager);
+				WorkerWindow workerWindow = new WorkerWindow(workerManager, textUser.getText());
 				workerWindow.setVisible(true);
 				esta = true;
 			}else if(adminManager.getAdmin(textUser.getText(), passwordFieldLogin.getText())) {
@@ -168,13 +168,12 @@ public class MainWindow extends JFrame implements ActionListener{
 			
 		} catch (Exception e1) {
 			
-			JOptionPane.showMessageDialog(this, e1.getMessage());
+			JOptionPane.showMessageDialog(this, "Longitud incorrecta");
 			e1.printStackTrace();
 		}
 			
 		
 	}
-	
 	public static void clean() {
 		passwordFieldLogin.setText("");
 		textUser.setText("");

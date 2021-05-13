@@ -9,6 +9,8 @@ public class User {
 	private String sTelephone;
 	private String sAddress;
 	private String sType_user;
+	private String sPassword;
+	
 	
 	
 	//Setters and Getters
@@ -53,6 +55,12 @@ public class User {
 	}
 	public void setsType_user(String sType_user) {
 		this.sType_user = sType_user;
+	}
+	public String getsPassword() {
+		return sPassword;
+	}
+	public void setsPassword(String sPassword) {
+		this.sPassword = sPassword;
 	}
 	
 	

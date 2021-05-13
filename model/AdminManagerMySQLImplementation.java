@@ -41,9 +41,13 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 		statement.setString(1, worker.getsId_user());
 		statement.setString(2, worker.getsName());
 		statement.setString(3, worker.getsSurname());
-		statement.setString(3, worker.getsEmail());
-		statement.setString(3, worker.getsTelephone());
-		statement.setString(3, worker.getsAddress());
+		statement.setString(4, worker.getsEmail());
+		statement.setString(5, worker.getsTelephone());
+		statement.setString(6, worker.getsAddress());
+		statement.setString(7, worker.getsId_admin());
+		statement.setString(8, worker.getsSocialSecurityNumber());
+		statement.setString(9, worker.getsType_user());
+		statement.setDate(10, worker.getLddate_s_w());
 		statement.executeUpdate();
 
 		closeConnection();
