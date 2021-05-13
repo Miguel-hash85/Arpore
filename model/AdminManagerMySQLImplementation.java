@@ -10,45 +10,30 @@ import java.util.ArrayList;
 
 public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementation implements AdminManager {
 
-	private Connection con;
-	private PreparedStatement statement;
-
 	// MySQL
-	final String INSERTworker = "INSERT INTO worker(id, nombre, telefono) VALUES( ?, ?, ?)";
-	final String GETworker = "SELECT * FROM worker WHERE id = ?";
+	final String INSERTworker = "INSERT INTO worker(id_user, name, surname, email, telephone, address, type_user, password, id_admin, date_s_w, socialSecurityNumber) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	final String GETworker = "SELECT * FROM worker WHERE id_user = ?";
 	final String GETworkers = "SELECT * FROM worker";
 	final String UPDATEworker = "UPDATE worker S41ET nombre = ?, telefono= ? WHERE id = ?";
 	final String DELETEworker = "DELETE FROM worker WHERE id = ?";
-
-	// Quitar cuando arreglemos  la clase abstracta
-	public void openConnection() throws Exception{
-		
-		  //String url = "jdbc:mysql://localhost/nombreBaseDatos";
-		  String url ="jdbc:mysql://localhost:3306/agency?serverTimezone=Europe/Madrid&useSSL=false";
-		  //con =  DriverManager.getConnection(url+"?" +"user=____&password=_____");
-		  con =  DriverManager.getConnection(url,"root" ,"abcd*1234");
-
-		
-	}
-	// Hasta aqui
 
 	@Override
 	public void addWorker(Worker worker) throws Exception {
 		openConnection();
 
-		statement = con.prepareStatement(INSERTworker);
+		stmt = con.prepareStatement(INSERTworker);
 
-		statement.setString(1, worker.getsId_user());
-		statement.setString(2, worker.getsName());
-		statement.setString(3, worker.getsSurname());
-		statement.setString(4, worker.getsEmail());
-		statement.setString(5, worker.getsTelephone());
-		statement.setString(6, worker.getsAddress());
-		statement.setString(7, worker.getsId_admin());
-		statement.setString(8, worker.getsSocialSecurityNumber());
-		statement.setString(9, worker.getsType_user());
-		statement.setDate(10, worker.getLddate_s_w());
-		statement.executeUpdate();
+		stmt.setString(1, worker.getsId_user());
+		stmt.setString(2, worker.getsName());
+		stmt.setString(3, worker.getsSurname());
+		stmt.setString(4, worker.getsEmail());
+		stmt.setString(5, worker.getsTelephone());
+		stmt.setString(6, worker.getsAddress());
+		stmt.setString(7, worker.getsId_admin());
+		stmt.setString(8, worker.getsSocialSecurityNumber());
+		stmt.setString(9, worker.getsType_user());
+		stmt.setDate(10, worker.getLddate_s_w());
+		stmt.executeUpdate();
 
 		closeConnection();
 
@@ -60,8 +45,8 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 		ResultSet rs = null;
 
 		openConnection();
-		statement = con.prepareStatement(GETworkers);
-		rs = statement.executeQuery();
+		stmt = con.prepareStatement(GETworkers);
+		rs = stmt.executeQuery();
 
 		while (rs.next()) {
 			worker = new Worker();
@@ -84,16 +69,16 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 		boolean changes = false;
 
 		openConnection();
-		statement = con.prepareStatement(UPDATEworker);
+		stmt = con.prepareStatement(UPDATEworker);
 
-		statement.setString(1, worker.getsId_user());
-		statement.setString(2, worker.getsName());
-		statement.setString(3, worker.getsSurname());
-		statement.setString(4, worker.getsEmail());
-		statement.setString(5, worker.getsTelephone());
-		statement.setString(6, worker.getsAddress());
+		stmt.setString(1, worker.getsId_user());
+		stmt.setString(2, worker.getsName());
+		stmt.setString(3, worker.getsSurname());
+		stmt.setString(4, worker.getsEmail());
+		stmt.setString(5, worker.getsTelephone());
+		stmt.setString(6, worker.getsAddress());
 
-		if (statement.executeUpdate() == 1)
+		if (stmt.executeUpdate() == 1)
 			changes = true;
 		closeConnection();
 
@@ -104,9 +89,9 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 	public void deleteWorker(Worker worker) throws Exception {
 		openConnection();
 
-		statement = con.prepareStatement(DELETEworker);
-		statement.setString(1, worker.getsId_user());
-		statement.executeUpdate();
+		stmt = con.prepareStatement(DELETEworker);
+		stmt.setString(1, worker.getsId_user());
+		stmt.executeUpdate();
 
 		closeConnection();
 	}
@@ -128,15 +113,15 @@ public class AdminManagerMySQLImplementation extends ConnectionMySQLImplementati
 	}
 
 	@Override
-	public boolean searchWorker(String worker) throws Exception {
+	public boolean searchWorker(String sWorker) throws Exception {
 		ResultSet rs = null;
 		boolean searchedWorker = false;
 
 		openConnection();
 
-		statement = con.prepareStatement(GETworker);
-		statement.setString(1, worker);
-		rs = statement.executeQuery();
+		stmt = con.prepareStatement(GETworker);
+		stmt.setString(1, sWorker);
+		rs = stmt.executeQuery();
 
 		if (rs.next()) {
 			searchedWorker = true;

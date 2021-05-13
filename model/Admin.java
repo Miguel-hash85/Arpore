@@ -4,7 +4,6 @@ public class Admin extends User {
 	private String cod_admin;
 	private String sRegion;
 
-
 	// Setters and Getters
 	public String getCod_admin() {
 		return cod_admin;

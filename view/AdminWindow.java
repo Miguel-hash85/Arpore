@@ -23,26 +23,18 @@ import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.JMenu;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 
-import javax.swing.event.MenuKeyListener;
-import javax.swing.event.MenuKeyEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import java.awt.Component;
-import javax.swing.Box;
 import java.awt.Panel;
-import java.awt.Dialog.ModalityType;
 
 public class AdminWindow extends JDialog implements ActionListener, FocusListener {
 	private static final long serialVersionUID = 1L;
